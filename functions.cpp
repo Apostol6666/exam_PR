@@ -24,6 +24,7 @@ Numbers Numbers::operator +(Numbers &num) const{
 	return res;
 }
 
+//Вспомогательная функция для сложения
 int Numbers::plus(int n1, int n2) {
 	int res = 0;
 	int i = 0;
@@ -62,6 +63,7 @@ Numbers Numbers::operator -(Numbers &num) const {
 	return res;
 }
 
+//Вспомогательная функция для вычитания
 int Numbers::minus(int n1, int n2) {
 	int res = 0;
 	int i = 0;
@@ -103,6 +105,7 @@ Numbers Numbers::operator *(Numbers &num) const {
 	return res;
 }
 
+//Вспомогательная функция для умножения
 int Numbers::umn(int n1, int n2) {
 	int ost = n2;
 	int res = 0;
@@ -119,6 +122,7 @@ int Numbers::umn(int n1, int n2) {
     return res;
 }
 
+//2 Вспомогательная функция для умножения
 int Numbers::help(int n, int num) {
 	int ost = num;
 	int res = 0;
@@ -137,6 +141,7 @@ int Numbers::help(int n, int num) {
 	return res;
 }	
 
+//Функция возведения в степень
 Numbers Numbers::degree(Numbers &num, int power) {
 	Numbers res;
 
@@ -148,6 +153,7 @@ Numbers Numbers::degree(Numbers &num, int power) {
 	return res;
 }
 
+//Функция деления
 Numbers Numbers::del(Numbers &n, Numbers &r) {
 	Numbers res;
 	res.number = n.number;
@@ -163,7 +169,7 @@ Numbers Numbers::del(Numbers &n, Numbers &r) {
 	return res;
 }
 
-
+// Функция для перевода числа в десятичную систему счисления
 int Numbers::numToTen() {
 	int r=0;
 	vector <int> mass2;
@@ -181,6 +187,7 @@ int Numbers::numToTen() {
 	return r;
 }
 
+// Функция для перевода числа в р-ичную систему счисления
 int Numbers::numToStep(int input_step) {
 	int r = 0;
 	int count = 0;
@@ -200,6 +207,7 @@ int Numbers::numToStep(int input_step) {
 	return r;
 }
 
+// Функция проверки числа
 bool Numbers::check() {
 	bool c = 1;
 	int count = 0;
@@ -218,6 +226,7 @@ bool Numbers::check() {
 	return c;
 }
 
+// Функция для создания вектора с числом
 void Numbers::convertArr() {
 	int num = number;
 	int count = 10;
@@ -237,6 +246,7 @@ void Numbers::convertArr() {
 	mass.push_back(ost);
 }
 
+// Функция для создания вектора с числом, с цифрами в обратном порядке
 void Numbers::convertArr2(vector <int>& mass2) {
 	int power = mass.size();
 	power = pow(10, power-1);
@@ -251,12 +261,14 @@ void Numbers::convertArr2(vector <int>& mass2) {
 	}
 }
 
+//Очищение вектора
 void Numbers::clearArr() {
 	if (!mass.empty()) {
 		mass.clear();
 	}
 }
 
+//Вспомогательная функция
 void Numbers::arrToNum() {
 	vector <int> mass2;
 	convertArr2(mass2);
@@ -291,6 +303,7 @@ int Numbers::returnRes() {
 	return result;
 }
 
+//Функция вывода
 void Numbers::write() {
 	cout << " Input Data : " << number << " ; " << endl;
 	cout << " Step : " << step << " ; " << endl;
