@@ -15,6 +15,7 @@ public:
 	Numbers(int num, int input_step);
 	void setNum(int num);
 	void setStep(int s);
+	void setResult(int r);
 	
 	bool check();
 	void convertArr();
