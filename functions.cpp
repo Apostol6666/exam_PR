@@ -1,8 +1,93 @@
 #include <iostream>
 #include "head.h"
+#include "ration.h"
 #include <cmath>
 
 using namespace std;
+
+
+Rations::Rations(int num, int den, int input_step) {
+	numer = num;
+	denom = den;
+	setStep(input_step);
+	setNum(numer/returnStep());
+}
+
+Rations Rations::rationToStep(int input_step) {
+	Rations res(*this);
+	res.setNum(res.numToTen());
+	res.numToStep(input_step);
+	int result = res.returnRes();
+
+	int ost = numer % denom;
+	gen_ost = ostToTen(ost);
+	gen_ost = ostToStep(gen_ost);
+
+	return res;
+}
+
+int Rations::ostToTen(int ost) {
+	int o = ost;
+	int count = 0;
+	int r = 0;
+	int i = -1;
+
+	while (ost / 10 > 0) {
+		count++;
+		ost %= 10;
+	}
+
+	while (count > 0) {
+		int power = pow(10, count);
+		o %= power;
+	    int num = pow(o/power, i);
+		r += num;
+		i--;
+		count--;
+	}
+
+	return r;
+}
+
+int Rations::ostToStep(int o) {
+	int ost = o;
+	int res = 0;
+	int s = returnStep();
+	int count = 0;
+
+	while (ost / 10 > 0) {
+		ost %= 10;
+		count++;
+	}
+
+	ost = o;
+	while (count > 0) {
+		int power = pow(10, count);
+		ost *= s;
+		res += (ost / s)*power;
+		ost %= s;
+		count--;
+	}
+
+	return res;
+}
+
+void Rations::write() {
+	cout << endl;
+	cout << "Начальная дробь :" << endl;
+	cout << "Целая часть - " << (numer/denom) << endl; 
+	cout << "Дробная часть - " << (numer % denom) << endl;
+	cout << "Знаменатель - " <<  denom << endl;
+
+	cout << endl;
+
+	cout << "Конечная дробь :" << endl;
+	cout << "Целая часть - " << returnRes() << endl;
+	cout << "Дробная часть - " << gen_ost << endl;
+	cout << "Знаменатель - " << denom << endl;
+	cout << "Система счисления - " << returnStep() << endl;
+	cout << endl;
+}
 
 Numbers::Numbers(int num, int input_step) {
 	number = num;
@@ -24,7 +109,6 @@ Numbers Numbers::operator +(Numbers &num) const{
 	return res;
 }
 
-//Вспомогательная функция для сложения
 int Numbers::plus(int n1, int n2) {
 	int res = 0;
 	int i = 0;
@@ -63,7 +147,6 @@ Numbers Numbers::operator -(Numbers &num) const {
 	return res;
 }
 
-//Вспомогательная функция для вычитания
 int Numbers::minus(int n1, int n2) {
 	int res = 0;
 	int i = 0;
@@ -105,7 +188,6 @@ Numbers Numbers::operator *(Numbers &num) const {
 	return res;
 }
 
-//Вспомогательная функция для умножения
 int Numbers::umn(int n1, int n2) {
 	int ost = n2;
 	int res = 0;
@@ -122,7 +204,6 @@ int Numbers::umn(int n1, int n2) {
     return res;
 }
 
-//2 Вспомогательная функция для умножения
 int Numbers::help(int n, int num) {
 	int ost = num;
 	int res = 0;
@@ -141,7 +222,6 @@ int Numbers::help(int n, int num) {
 	return res;
 }	
 
-//Функция возведения в степень
 Numbers Numbers::degree(Numbers &num, int power) {
 	Numbers res;
 
@@ -153,7 +233,6 @@ Numbers Numbers::degree(Numbers &num, int power) {
 	return res;
 }
 
-//Функция деления
 Numbers Numbers::del(Numbers &n, Numbers &r) {
 	Numbers res;
 	res.number = n.number;
@@ -169,7 +248,7 @@ Numbers Numbers::del(Numbers &n, Numbers &r) {
 	return res;
 }
 
-// Функция для перевода числа в десятичную систему счисления
+
 int Numbers::numToTen() {
 	int r=0;
 	vector <int> mass2;
@@ -187,7 +266,7 @@ int Numbers::numToTen() {
 	return r;
 }
 
-// Функция для перевода числа в р-ичную систему счисления
+
 int Numbers::numToStep(int input_step) {
 	int r = 0;
 	int count = 0;
@@ -207,7 +286,6 @@ int Numbers::numToStep(int input_step) {
 	return r;
 }
 
-// Функция проверки числа
 bool Numbers::check() {
 	bool c = 1;
 	int count = 0;
@@ -220,13 +298,12 @@ bool Numbers::check() {
 
 	if (c != 1) {
 		cout << " Wrong number! ";
-		return -3;
+		return 0;
 	}
 
 	return c;
 }
 
-// Функция для создания вектора с числом
 void Numbers::convertArr() {
 	int num = number;
 	int count = 10;
@@ -246,7 +323,6 @@ void Numbers::convertArr() {
 	mass.push_back(ost);
 }
 
-// Функция для создания вектора с числом, с цифрами в обратном порядке
 void Numbers::convertArr2(vector <int>& mass2) {
 	int power = mass.size();
 	power = pow(10, power-1);
@@ -261,14 +337,12 @@ void Numbers::convertArr2(vector <int>& mass2) {
 	}
 }
 
-//Очищение вектора
 void Numbers::clearArr() {
 	if (!mass.empty()) {
 		mass.clear();
 	}
 }
 
-//Вспомогательная функция
 void Numbers::arrToNum() {
 	vector <int> mass2;
 	convertArr2(mass2);
@@ -291,6 +365,10 @@ void Numbers::setStep(int s) {
 	step = s;
 }
 
+void Numbers::setResult(int r) {
+	result = r;
+}
+
 int Numbers::returnNum() {
 	return number;
 }
@@ -303,7 +381,6 @@ int Numbers::returnRes() {
 	return result;
 }
 
-//Функция вывода
 void Numbers::write() {
 	cout << " Input Data : " << number << " ; " << endl;
 	cout << " Step : " << step << " ; " << endl;
