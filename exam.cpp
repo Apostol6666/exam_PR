@@ -1,5 +1,6 @@
 #include <iostream>
 #include "head.h"
+#include "ration.h"
 #include <math.h>
 
 using namespace std;
@@ -7,6 +8,12 @@ using namespace std;
 int main()
 {
 	setlocale(LC_ALL, "Russian");
+
+	Rations rat( 22, 6, 7);
+	rat.rationToStep(3);
+	rat.write();
+
+
 	Numbers num;
 	num.setNum(1050);
 	num.setStep(7);
@@ -48,10 +55,13 @@ int main()
 
 	cout << " Перевод в 10-чную систему счисления : " << endl;
 	num.numToTen();
+	num.write();
+
 	cout << endl;
 
 	cout << " Перевод в 5-чную систему счисления : " << endl;
 	num.numToStep(5);
+	num.write();
 	cout << endl;
 
 	cout << " Проверка : " << endl;
